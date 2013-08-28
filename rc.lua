@@ -251,6 +251,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "F1",   function () awful.util.spawn("amixer set Master toggle") end),
     awful.key({ modkey,           }, "F2",   function () awful.util.spawn("amixer set Master 5%-") end),
     awful.key({ modkey,           }, "F3",   function () awful.util.spawn("amixer set Master 5%+") end),
+    awful.key({ modkey,           }, "F5",   function () awful.util.spawn("cmus-remote -u") end),
+    awful.key({ modkey,           }, "F6",   function () awful.util.spawn("cmus-remote -s") end),
+    awful.key({ modkey,           }, "F7",   function () awful.util.spawn("cmus-remote -r") end),
+    awful.key({ modkey,           }, "F8",   function () awful.util.spawn("cmus-remote -n") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
