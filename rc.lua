@@ -248,9 +248,9 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey,           }, "F12",   function () awful.util.spawn("xscreensaver-command -lock") end),
-    awful.key({ modkey,           }, "F1",   function () awful.util.spawn("amixer set Master toggle") end),
-    awful.key({ modkey,           }, "F2",   function () awful.util.spawn("amixer set Master 5%-") end),
-    awful.key({ modkey,           }, "F3",   function () awful.util.spawn("amixer set Master 5%+") end),
+    awful.key({ modkey,           }, "F1",   function () awful.util.spawn("amixer set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
+    awful.key({ modkey,           }, "F2",   function () awful.util.spawn("amixer set Master 5%-")  awful.util.spawn("amixer set Speaker 5%-") end),
+    awful.key({ modkey,           }, "F3",   function () awful.util.spawn("amixer set Master 5%+") awful.util.spawn("amixer set Speaker 5%+") end),
     awful.key({ modkey,           }, "F5",   function () awful.util.spawn("cmus-remote -u") end),
     awful.key({ modkey,           }, "F6",   function () awful.util.spawn("cmus-remote -s") end),
     awful.key({ modkey,           }, "F7",   function () awful.util.spawn("cmus-remote -r") end),
