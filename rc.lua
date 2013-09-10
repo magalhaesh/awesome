@@ -254,11 +254,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "F5",   function () awful.util.spawn("cmus-remote -u") end),
     awful.key({ modkey,           }, "F6",   function () awful.util.spawn("cmus-remote -s") end),
     awful.key({ modkey,           }, "F7",   function () awful.util.spawn("cmus-remote -r") end),
-    awful.key({ modkey, "Shift"     }, "F7",   function () awful.util.spawn("cmus-remote -k -15s") end),
+    awful.key({ modkey, "Shift"   }, "F7",   function () awful.util.spawn("cmus-remote -k -15s") end),
     awful.key({ modkey, "Control" }, "F7",   function () awful.util.spawn("cmus-remote -k -1m") end),
     awful.key({ modkey,           }, "F8",   function () awful.util.spawn("cmus-remote -n") end),
     awful.key({ modkey, "Control" }, "F8",   function () awful.util.spawn("cmus-remote -k +1m") end),
-    awful.key({ modkey, "Shift"     }, "F8",   function () awful.util.spawn("cmus-remote -k +15s") end),
+    awful.key({ modkey, "Shift"   }, "F8",   function () awful.util.spawn("cmus-remote -k +15s") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -272,6 +272,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
+    awful.key({                   }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/ 2>/dev/null'") end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
