@@ -259,6 +259,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "F8",   function () awful.util.spawn("cmus-remote -n") end),
     awful.key({ modkey, "Control" }, "F8",   function () awful.util.spawn("cmus-remote -k +1m") end),
     awful.key({ modkey, "Shift"   }, "F8",   function () awful.util.spawn("cmus-remote -k +15s") end),
+    awful.key({ modkey,           }, "F9",   function () awful.util.spawn("cmus-remote -S") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
