@@ -11,6 +11,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 xdg_menu = require("archmenu")
+vicious = require("vicious")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -182,6 +183,16 @@ for s = 1, screen.count() do
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
 
+    -- Initialize widget
+    memwidget = wibox.widget.textbox()
+    -- -- Register widget
+    vicious.register(memwidget, vicious.widgets.mem, "RAM: $1% ($2MB/$3MB)", 13)
+
+    -- Initialize widget
+    cpuwidget = wibox.widget.textbox()
+    -- -- Register widget
+    vicious.register(cpuwidget, vicious.widgets.cpu, "CPU: $1%")
+
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
@@ -190,6 +201,8 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(cpuwidget)
+    right_layout:add(memwidget)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
