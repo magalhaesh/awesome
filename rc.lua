@@ -10,6 +10,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+xdg_menu = require("archmenu")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -38,7 +39,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init(".config/awesome/themes/default/theme.lua")
+beautiful.init(".config/awesome/themes/vinyl/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt -e /usr/bin/fish"
@@ -97,6 +98,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "Applications", xdgmenu},
                                     { "open terminal", terminal }
                                   }
                         })
