@@ -186,12 +186,12 @@ for s = 1, screen.count() do
     -- Initialize widget
     memwidget = wibox.widget.textbox()
     -- -- Register widget
-    vicious.register(memwidget, vicious.widgets.mem, "RAM: $1% ($2MB/$3MB)", 13)
+    vicious.register(memwidget, vicious.widgets.mem, "RAM: $1% ($2MB/$3MB) | ", 13)
 
     -- Initialize widget
     cpuwidget = wibox.widget.textbox()
     -- -- Register widget
-    vicious.register(cpuwidget, vicious.widgets.cpu, "CPU: $1%")
+    vicious.register(cpuwidget, vicious.widgets.cpu, " | CPU: $1% | ")
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()

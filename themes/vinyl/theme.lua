@@ -61,10 +61,10 @@ theme.bg_focus      = "#000001"
 theme.bg_urgent     = "#000000"
 theme.bg_minimize   = "#000000"
 
-theme.fg_normal     = "#575757"
+theme.fg_normal     = "#D9D9D9"
 theme.fg_focus      = "#D2D46B"
 theme.fg_urgent     = "#F61313"
-theme.fg_minimize   = "#000000"
+theme.fg_minimize   = "#575757"
 
 theme.border_width  = "1"
 theme.border_normal = "#000000"
