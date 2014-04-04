@@ -182,6 +182,11 @@ for s = 1, screen.count() do
 
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
+    
+    -- Initialize widget
+    diowidget = wibox.widget.textbox()
+    -- -- Register widget
+    vicious.register(diowidget, vicious.widgets.dio, "I/O: ${sda read_kb}kb/${sda write_kb}kb | ", 7)
 
     -- Initialize widget
     memwidget = wibox.widget.textbox()
@@ -191,7 +196,7 @@ for s = 1, screen.count() do
     -- Initialize widget
     cpuwidget = wibox.widget.textbox()
     -- -- Register widget
-    vicious.register(cpuwidget, vicious.widgets.cpu, " | CPU: $1% | ")
+    vicious.register(cpuwidget, vicious.widgets.cpu, " | CPU: $1%/$2%/$3%/$4% | ", 5)
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -203,6 +208,7 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     right_layout:add(cpuwidget)
     right_layout:add(memwidget)
+    right_layout:add(diowidget)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
