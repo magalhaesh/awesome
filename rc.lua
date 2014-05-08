@@ -74,9 +74,7 @@ local layouts =
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, false)
-    end
+    gears.wallpaper.maximized(beautiful.wallpaper, s, false)
 end
 -- }}}
 
@@ -280,6 +278,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "F8",   function () awful.util.spawn("cmus-remote -k +1m") end),
     awful.key({ modkey, "Shift"   }, "F8",   function () awful.util.spawn("cmus-remote -k +15s") end),
     awful.key({ modkey,           }, "F9",   function () awful.util.spawn("cmus-remote -S") end),
+    awful.key({ modkey,           }, "F10",  function () awful.util.spawn_with_shell("notify-send \"$(cmus-remote -Q | sed -n 's/file \\(.*\\)/\\1/p')\"") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
