@@ -182,19 +182,19 @@ for s = 1, screen.count() do
     mywibox[s] = awful.wibox({ position = "top", screen = s })
     
     -- Initialize widget
-    diowidget = wibox.widget.textbox()
+    cpuwidget = wibox.widget.textbox()
     -- -- Register widget
-    vicious.register(diowidget, vicious.widgets.dio, "I/O: ${sda read_kb}kb/${sda write_kb}kb | ", 7)
+    vicious.register(cpuwidget, vicious.widgets.cpu, "<span color='#0F0'> [</span> CPU: $1% <span color='#0F0'>|</span> ", 5)
 
     -- Initialize widget
     memwidget = wibox.widget.textbox()
     -- -- Register widget
-    vicious.register(memwidget, vicious.widgets.mem, "RAM/Swap: $1%/$5% | ", 13)
+    vicious.register(memwidget, vicious.widgets.mem, "RAM/Swap: $1%/$5% <span color='#0F0'>|</span> ", 13)
 
     -- Initialize widget
-    cpuwidget = wibox.widget.textbox()
+    diowidget = wibox.widget.textbox()
     -- -- Register widget
-    vicious.register(cpuwidget, vicious.widgets.cpu, " | CPU: $1% | ", 5)
+    vicious.register(diowidget, vicious.widgets.dio, "I/O: ${sda read_kb}kb/${sda write_kb}kb <span color='#0F0'>]</span> ", 7)
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -390,6 +390,9 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    { rule = { class = "plugin-container" },
+      properties = { floating = true,
+                     focus = yes } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
