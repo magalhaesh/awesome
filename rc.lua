@@ -180,7 +180,7 @@ for s = 1, screen.count() do
 
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
-    
+
     -- Initialize widget
     cpuwidget = wibox.widget.textbox()
     -- -- Register widget
@@ -204,7 +204,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    if s == 1 then 
+    if s == 1 then
         right_layout:add(cpuwidget)
         right_layout:add(memwidget)
         right_layout:add(diowidget)
@@ -266,16 +266,17 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey,           }, "F12",   function () awful.util.spawn("xscreensaver-command -lock") end),
-    awful.key({ modkey,           }, "F1",   function () awful.util.spawn("amixer set Master toggle") end),
-    awful.key({ modkey,           }, "F2",   function () awful.util.spawn("amixer set Master 5%-") end),
-    awful.key({ modkey,           }, "F3",   function () awful.util.spawn("amixer set Master 5%+") end),
+    awful.key({ modkey,           }, "F1",   function () awful.util.spawn("amixer set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
+    awful.key({ modkey,           }, "F2",   function () awful.util.spawn("amixer set Master 5%-")  awful.util.spawn("amixer set Speaker 5%-") end),
+    awful.key({ modkey,           }, "F3",   function () awful.util.spawn("amixer set Master 5%+") awful.util.spawn("amixer set Speaker 5%+") end),
     awful.key({ modkey,           }, "F5",   function () awful.util.spawn("cmus-remote -u") end),
+    awful.key({ modkey, "Control" }, "F5",   function () awful.util.spawn("playerctl play-pause --player=spotify") end),
     awful.key({ modkey,           }, "F6",   function () awful.util.spawn("cmus-remote -s") end),
     awful.key({ modkey,           }, "F7",   function () awful.util.spawn("cmus-remote -r") end),
     awful.key({ modkey, "Shift"   }, "F7",   function () awful.util.spawn("cmus-remote -k -15s") end),
-    awful.key({ modkey, "Control" }, "F7",   function () awful.util.spawn("cmus-remote -k -1m") end),
+    awful.key({ modkey, "Control" }, "F7",   function () awful.util.spawn("playerctl previous --player=spotify") end),
     awful.key({ modkey,           }, "F8",   function () awful.util.spawn("cmus-remote -n") end),
-    awful.key({ modkey, "Control" }, "F8",   function () awful.util.spawn("cmus-remote -k +1m") end),
+    awful.key({ modkey, "Control" }, "F8",   function () awful.util.spawn("playerctl next --player=spotify") end),
     awful.key({ modkey, "Shift"   }, "F8",   function () awful.util.spawn("cmus-remote -k +15s") end),
     awful.key({ modkey,           }, "F9",   function () awful.util.spawn("cmus-remote -S") end),
     awful.key({ modkey,           }, "F10",  function () awful.util.spawn_with_shell("notify-send \"$(cmus-remote -Q | sed -n 's/file \\(.*\\)/\\1/p')\"") end),
