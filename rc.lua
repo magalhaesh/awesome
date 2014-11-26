@@ -40,7 +40,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init(".config/awesome/themes/vinyl/theme.lua")
+beautiful.init(".config/awesome/themes/glazunov/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt -e /usr/bin/fish"
@@ -74,7 +74,9 @@ local layouts =
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
-    gears.wallpaper.maximized(beautiful.wallpaper, s, false)
+    for s = 1, screen.count() do
+        gears.wallpaper.maximized(beautiful.wallpaper, s, false)
+    end
 end
 -- }}}
 
