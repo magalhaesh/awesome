@@ -54,19 +54,19 @@ end
 
 theme.font          = "anorexia 9"
 
-theme.bg_normal     = "#0d1926"
-theme.bg_focus      = "#212a40"
+theme.bg_normal     = "#262626"
+theme.bg_focus      = "#303030"
 theme.bg_urgent     = "#3B0A01"
 theme.bg_minimize   = "#000000"
 
 theme.fg_normal     = "#D9D9D9"
-theme.fg_focus      = "#7474eb"
+theme.fg_focus      = "#AFAF5F"
 theme.fg_urgent     = "#F61313"
 theme.fg_minimize   = "#575757"
 
 theme.border_width  = "1"
 theme.border_normal = "#000000"
-theme.border_focus  = "#7474eb"
+theme.border_focus  = "#AFAF5F"
 theme.border_marked = "#000000"
 
 -- There are other variable sets
