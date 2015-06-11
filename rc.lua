@@ -74,9 +74,9 @@ local layouts =
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
-    for s = 1, screen.count() do
+    -- for s = 1, screen.count() do
         gears.wallpaper.maximized(beautiful.wallpaper, s, false)
-    end
+    -- end
 end
 -- }}}
 
@@ -272,13 +272,13 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "F2",    function () awful.util.spawn("amixer set Master 5%-")  awful.util.spawn("amixer set Speaker 5%-") end),
     awful.key({ modkey,           }, "F3",    function () awful.util.spawn("amixer set Master 5%+") awful.util.spawn("amixer set Speaker 5%+") end),
     awful.key({ modkey,           }, "F5",    function () awful.util.spawn("cmus-remote -u") end),
-    awful.key({ modkey, "Control" }, "F5",    function () awful.util.spawn("playerctl play-pause --player=spotify") end),
+    awful.key({ modkey,           }, "d",     function () awful.util.spawn("playerctl play-pause --player=spotify") end),
     awful.key({ modkey,           }, "F6",    function () awful.util.spawn("cmus-remote -s") end),
     awful.key({ modkey,           }, "F7",    function () awful.util.spawn("cmus-remote -r") end),
     awful.key({ modkey, "Shift"   }, "F7",    function () awful.util.spawn("cmus-remote -k -15s") end),
-    awful.key({ modkey, "Control" }, "F7",    function () awful.util.spawn("playerctl previous --player=spotify") end),
+    awful.key({ modkey,           }, "a",     function () awful.util.spawn("playerctl previous --player=spotify") end),
     awful.key({ modkey,           }, "F8",    function () awful.util.spawn("cmus-remote -n") end),
-    awful.key({ modkey, "Control" }, "F8",    function () awful.util.spawn("playerctl next --player=spotify") end),
+    awful.key({ modkey,           }, "s",     function () awful.util.spawn("playerctl next --player=spotify") end),
     awful.key({ modkey, "Shift"   }, "F8",    function () awful.util.spawn("cmus-remote -k +15s") end),
     awful.key({ modkey,           }, "F9",    function () awful.util.spawn("cmus-remote -S") end),
     awful.key({ modkey,           }, "F10",   function () awful.util.spawn_with_shell("notify-send \"$(cmus-remote -Q | sed -n 's/file \\(.*\\)/\\1/p')\"") end),
@@ -396,7 +396,9 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "plugin-container" },
       properties = { floating = true,
-                     focus = yes } },
+      focus = yes } },
+    { rule = { class = "Spotify" },
+      properties = { tag = tags[1][8] } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
