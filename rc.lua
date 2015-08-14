@@ -12,6 +12,7 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 -- xdg_menu = require("archmenu")
 vicious = require("vicious")
+local lain = require("lain")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -85,7 +86,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ "➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒" }, s, layouts[1])
 end
 -- }}}
 
@@ -98,22 +99,119 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Applications", xdgmenu},
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+-- {{{ Freedesktop Menu
+mymainmenu = awful.menu.new({ items = require("menugen").build_menu(),
+                              theme = { height = 16, width = 130 }})
+-- }}}
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- {{{ Wibox
--- Create a textclock widget
-mytextclock = awful.widget.textclock()
+markup      = lain.util.markup
+
+-- Textclock
+clockicon = wibox.widget.imagebox(beautiful.widget_clock)
+--mytextclock = awful.widget.textclock(markup("#7788af", "%A %d %B ") .. markup("#343639", ">") .. markup("#de5e1e", " %H:%M "))
+mytextclock = lain.widgets.abase({
+    timeout  = 60,
+    cmd      = "date +'%A %d %B %R'",
+    settings = function()
+        local t_output = ""
+        local o_it = string.gmatch(output, "%S+")
+
+        for i=1,3 do t_output = t_output .. " " .. o_it(i) end
+
+        widget:set_markup(markup("#7788af", t_output) .. markup("#343639", " > ") .. markup("#de5e1e", o_it(1)) .. " ")
+    end
+})
+
+-- Calendar
+-- lain.widgets.calendar:attach(mytextclock, { font_size = 10 })
+
+-- Weather
+weathericon = wibox.widget.imagebox(beautiful.widget_weather)
+myweather = lain.widgets.weather({
+    city_id = 3458449, -- placeholder
+    settings = function()
+        descr = weather_now["weather"][1]["description"]:lower()
+        units = math.floor(weather_now["main"]["temp"])
+        widget:set_markup(markup("#eca4c4", descr .. " @ " .. units .. "°C "))
+    end
+})
+
+-- / fs
+fsicon = wibox.widget.imagebox(beautiful.widget_fs)
+fswidget = lain.widgets.fs({
+    settings  = function()
+        widget:set_markup(markup("#80d9d8", fs_now.used .. "% "))
+    end
+})
+
+-- CPU
+cpuicon = wibox.widget.imagebox()
+cpuicon:set_image(beautiful.widget_cpu)
+cpuwidget = lain.widgets.cpu({
+    settings = function()
+        widget:set_markup(markup("#e33a6e", cpu_now.usage .. "% "))
+    end
+})
+
+-- Battery
+-- baticon = wibox.widget.imagebox(beautiful.widget_batt)
+-- batwidget = lain.widgets.bat({
+--     settings = function()
+--         if bat_now.perc == "N/A" then
+--             perc = "AC "
+--         else
+--             perc = bat_now.perc .. "% "
+--         end
+--         widget:set_text(perc)
+--     end
+-- })
+
+-- ALSA volume
+volicon = wibox.widget.imagebox(beautiful.widget_vol)
+volumewidget = lain.widgets.alsa({
+    settings = function()
+        if volume_now.status == "off" then
+            volume_now.level = volume_now.level .. "M"
+        end
+
+        widget:set_markup(markup("#7493d2", volume_now.level .. "% "))
+    end
+})
+
+-- Net
+netdownicon = wibox.widget.imagebox(beautiful.widget_netdown)
+--netdownicon.align = "middle"
+netdowninfo = wibox.widget.textbox()
+netupicon = wibox.widget.imagebox(beautiful.widget_netup)
+--netupicon.align = "middle"
+netupinfo = lain.widgets.net({
+    settings = function()
+        if iface ~= "network off" and
+           string.match(myweather._layout.text, "N/A")
+        then
+            myweather.update()
+        end
+
+        widget:set_markup(markup("#e54c62", net_now.sent .. " "))
+        netdowninfo:set_markup(markup("#87af5f", net_now.received .. " "))
+    end
+})
+
+-- MEM
+memicon = wibox.widget.imagebox(beautiful.widget_mem)
+memwidget = lain.widgets.mem({
+    settings = function()
+        widget:set_markup(markup("#e0da37", mem_now.used .. "M "))
+    end
+})
+
+-- Spacer
+spacer = wibox.widget.textbox(" ")
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -183,37 +281,37 @@ for s = 1, screen.count() do
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
 
-    -- Initialize widget
-    cpuwidget = wibox.widget.textbox()
-    -- -- Register widget
-    vicious.register(cpuwidget, vicious.widgets.cpu, "<span color='#0F0'> [</span> CPU: $1% <span color='#0F0'>|</span> ", 5)
-
-    -- Initialize widget
-    memwidget = wibox.widget.textbox()
-    -- -- Register widget
-    vicious.register(memwidget, vicious.widgets.mem, "RAM/Swap: $1%/$5% <span color='#0F0'>|</span> ", 13)
-
-    -- Initialize widget
-    diowidget = wibox.widget.textbox()
-    -- -- Register widget
-    vicious.register(diowidget, vicious.widgets.dio, "I/O: ${sda read_kb}kb/${sda write_kb}kb <span color='#0F0'>]</span> ", 7)
-
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mylauncher)
+    left_layout:add(mylayoutbox[s])
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then
-        right_layout:add(cpuwidget)
-        right_layout:add(memwidget)
-        right_layout:add(diowidget)
         right_layout:add(wibox.widget.systray())
     end
+
+    right_layout:add(netdownicon)
+    right_layout:add(netdowninfo)
+    right_layout:add(netupicon)
+    right_layout:add(netupinfo)
+    right_layout:add(volicon)
+    right_layout:add(volumewidget)
+    right_layout:add(memicon)
+    right_layout:add(memwidget)
+    right_layout:add(cpuicon)
+    right_layout:add(cpuwidget)
+    right_layout:add(fsicon)
+    right_layout:add(fswidget)
+    right_layout:add(weathericon)
+    right_layout:add(myweather)
+    --right_layout:add(tempicon)
+    --right_layout:add(tempwidget)
+    right_layout:add(clockicon)
     right_layout:add(mytextclock)
-    right_layout:add(mylayoutbox[s])
+
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
