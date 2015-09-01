@@ -133,7 +133,7 @@ mytextclock = lain.widgets.abase({
 -- Weather
 weathericon = wibox.widget.imagebox(beautiful.widget_weather)
 myweather = lain.widgets.weather({
-    city_id = 3458449, -- placeholder
+    city_id = 3458449, -- londrina
     settings = function()
         descr = weather_now["weather"][1]["description"]:lower()
         units = math.floor(weather_now["main"]["temp"])
@@ -155,6 +155,14 @@ cpuicon:set_image(beautiful.widget_cpu)
 cpuwidget = lain.widgets.cpu({
     settings = function()
         widget:set_markup(markup("#e33a6e", cpu_now.usage .. "% "))
+    end
+})
+
+-- Coretemp
+tempicon = wibox.widget.imagebox(beautiful.widget_temp)
+tempwidget = lain.widgets.temp({
+    settings = function()
+        widget:set_markup(markup("#f1af5f", coretemp_now .. "°C "))
     end
 })
 
@@ -322,8 +330,8 @@ for s = 1, screen.count() do
     right_layout:add(fswidget)
     right_layout:add(weathericon)
     right_layout:add(myweather)
-    --right_layout:add(tempicon)
-    --right_layout:add(tempwidget)
+    right_layout:add(tempicon)
+    right_layout:add(tempwidget)
     right_layout:add(clockicon)
     right_layout:add(mytextclock)
 
