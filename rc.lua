@@ -62,9 +62,10 @@ lain.layout.centerfair.ncol    = 1
 
 local layouts = {
     awful.layout.suit.tile,
-    lain.layout.uselessfair.horizontal,
     lain.layout.uselesstile,
-    lain.layout.uselessfair,
+    lain.layout.uselesstile.top,
+    lain.layout.uselesstile.bottom,
+    lain.layout.uselesstile.left,
     lain.layout.termfair,
     lain.layout.centerfair,
     lain.layout.uselesspiral.dwindle,
@@ -370,7 +371,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    awful.key({ modkey,           }, "w", function () awful.util.spawn("rofi -show window") end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
