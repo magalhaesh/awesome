@@ -13,6 +13,8 @@ local menubar = require("menubar")
 local lain = require("lain")
 local eminent = require("eminent")
 
+awful.util.spawn("xcompmgr -cf -D7 &")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
