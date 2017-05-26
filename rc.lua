@@ -419,6 +419,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
+    -- Media Keys
+    awful.key({                   }, "XF86AudioMute",    function () awful.util.spawn("amixer set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
+    awful.key({                   }, "XF86AudioLowerVolume",    function () awful.util.spawn("amixer set Master 1%-")  awful.util.spawn("amixer set Speaker 1%-") end),
+    awful.key({                   }, "XF86AudioRaiseVolume",    function () awful.util.spawn("amixer set Master 1%+") awful.util.spawn("amixer set Speaker 1%+") end),
+    awful.key({                   }, "XF86AudioPlay",     function () awful.util.spawn("playerctl play-pause --player=spotify") end),
+    awful.key({                   }, "XF86AudioStop",     function () awful.util.spawn("playerctl stop --player=spotify") end),
+    awful.key({                   }, "XF86AudioPrev",     function () awful.util.spawn("playerctl previous --player=spotify") end),
+    awful.key({                   }, "XF86AudioNext",     function () awful.util.spawn("playerctl next --player=spotify") end),
+
     -- Rename tag
     awful.key({ modkey, "Shift"   }, "Tab", function () lain.util.rename_tag(mypromptbox) end),
 
