@@ -15,6 +15,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("awful.hotkeys_popup.keys")
 
 local eminent = require("eminent")
+local lain = require("lain")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -68,12 +69,12 @@ awful.layout.layouts = {
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.max,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
     awful.layout.suit.floating,
-    -- awful.layout.suit.corner.ne,
+    awful.layout.suit.corner.nw,
+    awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
 }
@@ -119,12 +120,65 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 -- mykeyboardlayout = awful.widget.keyboardlayout()
 
+-- {{{ Wibar
+
 -- Create systray
 mysystray = wibox.widget.systray()
 
--- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+
+local markup = lain.util.markup
+local separators = lain.util.separators
+
+-- Separators
+local arrow = separators.arrow_left
+
+-- MEM
+local memicon = wibox.widget.imagebox(beautiful.widget_mem)
+local mem = lain.widget.mem({
+    settings = function()
+        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. mem_now.used .. "MB "))
+    end
+})
+
+-- CPU
+local cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
+local cpu = lain.widget.cpu({
+    settings = function()
+        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal ," " .. cpu_now.usage .. "% "))
+    end
+})
+
+local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
+local temp = lain.widget.temp({
+    settings = function()
+        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. coretemp_now .. "°C "))
+    end
+})
+
+local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
+beautiful.fs = lain.widget.fs({
+    options  = "--exclude-type=tmpfs",
+    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "xos4 Terminus 10" },
+    settings = function()
+        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. fs_now.available_gb .. "GB "))
+    end
+})
+
+local neticon = wibox.widget.imagebox(beautiful.widget_net)
+local net = lain.widget.net({
+    settings = function()
+        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. net_now.received .. " ↓↑ " .. net_now.sent .. " "))
+    end
+})
+
+-- Textclock
+local clock = awful.widget.watch(
+    "date +'%a %d %b %R'", 60,
+    function(widget, stdout)
+        widget:set_markup(" " .. markup.fontfg(beautiful.font, beautiful.widget_fg_normal, stdout))
+    end
+)
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -224,7 +278,24 @@ awful.screen.connect_for_each_screen(function(s)
         mysystray.set_screen(s)
         right_sublayout:add(mysystray)
     end
-    right_sublayout:add(mytextclock)
+
+    -- right_sublayout:add(wibox.container.background(wibox.container.margin(task, 3, 7), "#343434"))
+    -- right_sublayout:add(arrow("#343434", "#777E76"))
+    right_sublayout:add(arrow(beautiful.bg_normal, "#6272a4"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 2, 3), "#6272a4"))
+    right_sublayout:add(arrow("#6272a4", "#bd93f9"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, 3, 4), "#bd93f9"))
+    right_sublayout:add(arrow("#bd93f9", "#6272a4"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { tempicon, temp.widget, layout = wibox.layout.align.horizontal }, 4, 4), "#6272a4"))
+    right_sublayout:add(arrow("#6272a4", "#bd93f9"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { fsicon, beautiful.fs.widget, layout = wibox.layout.align.horizontal }, 3, 3), "#bd93f9"))
+    right_sublayout:add(arrow("#bd93f9", "#6272a4"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, 3, 3), "#6272a4"))
+    right_sublayout:add(arrow("#6272a4", "#bd93f9"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(clock, 4, 8), "#bd93f9"))
+    right_sublayout:add(arrow("#bd93f9", "alpha"))
+
+    -- right_sublayout:add(clock)
     right_sublayout:add(s.mylayoutbox)
 
     -- Putting everything together

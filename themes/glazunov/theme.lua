@@ -23,6 +23,8 @@ theme.fg_focus      = "#000000"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
+theme.widget_fg_normal   = "#fefefe"
+
 theme.useless_gap   = dpi(2)
 theme.border_width  = dpi(2)
 theme.border_normal = "#1c2022"
@@ -115,6 +117,25 @@ theme.layout_cornernw = themes_path.."default/layouts/cornernww.png"
 theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
 theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
 theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
+
+-- Custom icons
+theme.widget_ac = themes_path .. "glazunov/icons/ac.png"
+theme.widget_battery = themes_path .. "glazunov/icons/battery.png"
+theme.widget_battery_low = themes_path .. "glazunov/icons/battery_low.png"
+theme.widget_battery_empty = themes_path .. "glazunov/icons/battery_empty.png"
+theme.widget_mem = themes_path .. "glazunov/icons/mem.png"
+theme.widget_cpu = themes_path .. "glazunov/icons/cpu.png"
+theme.widget_temp = themes_path .. "glazunov/icons/temp.png"
+theme.widget_net = themes_path .. "glazunov/icons/net.png"
+theme.widget_hdd = themes_path .. "glazunov/icons/hdd.png"
+theme.widget_music = themes_path .. "glazunov/icons/note.png"
+theme.widget_music_on = themes_path .. "glazunov/icons/note_on.png"
+theme.widget_vol = themes_path .. "glazunov/icons/vol.png"
+theme.widget_vol_low = themes_path .. "glazunov/icons/vol_low.png"
+theme.widget_vol_no = themes_path .. "glazunov/icons/vol_no.png"
+theme.widget_vol_mute = themes_path .. "glazunov/icons/vol_mute.png"
+theme.widget_mail = themes_path .. "glazunov/icons/mail.png"
+theme.widget_mail_on = themes_path .. "glazunov/icons/mail_on.png"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
