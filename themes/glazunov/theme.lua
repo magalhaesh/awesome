@@ -1,109 +1,130 @@
---[[
-                                      
-     Multicolor Awesome WM config 2.0 
-     github.com/copycat-killer        
-                                      
---]]
+---------------------------
+-- Modified Default awesome theme (Glazunov) --
+---------------------------
 
+local theme_assets = require("beautiful.theme_assets")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 
-theme                               = {}
+local themes_path = "~/.config/awesome/themes/"
 
-theme.confdir                       = os.getenv("HOME") .. "/.config/awesome/themes/glazunov"
-theme.wallpaper                     = theme.confdir .. "/background.png"
+local theme = {}
 
-theme.font                          = "Hack Bold 8"
---theme.taglist_font                =
-theme.bg_normal                     = "#282a36"
-theme.bg_focus                      = "#9474d4"
-theme.bg_urgent                     = "#5236C4"
-theme.fg_normal                     = "#aaaaaa"
-theme.fg_focus                      = "#000000"
-theme.fg_urgent                     = "#aaaaaa"
-theme.bg_minimize                   = "#000000"
-theme.fg_minimize                   = "#ffffff"
-theme.fg_black                      = "#424242"
-theme.fg_red                        = "#ce5666"
-theme.fg_green                      = "#80a673"
-theme.fg_yellow                     = "#ffaf5f"
-theme.fg_blue                       = "#7788af"
-theme.fg_magenta                    = "#94738c"
-theme.fg_cyan                       = "#778baf"
-theme.fg_white                      = "#aaaaaa"
-theme.fg_blu                        = "#8ebdde"
-theme.border_width                  = "2"
-theme.border_normal                 = "#1c2022"
-theme.border_focus                  = "#8e71b7"
-theme.border_marked                 = "#3ca4d8"
-theme.menu_width                    = "110"
-theme.menu_border_width             = "0"
-theme.menu_fg_normal                = "#8e71b7"
-theme.menu_fg_focus                 = "#f635a5"
+theme.font          = "Hack 8"
 
-theme.submenu_icon                  = theme.confdir .. "/icons/submenu.png"
-theme.widget_temp                   = theme.confdir .. "/icons/temp.png"
-theme.widget_uptime                 = theme.confdir .. "/icons/ac.png"
-theme.widget_cpu                    = theme.confdir .. "/icons/cpu.png"
-theme.widget_weather                = theme.confdir .. "/icons/dish.png"
-theme.widget_fs                     = theme.confdir .. "/icons/fs.png"
-theme.widget_mem                    = theme.confdir .. "/icons/mem.png"
-theme.widget_fs                     = theme.confdir .. "/icons/fs.png"
-theme.widget_note                   = theme.confdir .. "/icons/note.png"
-theme.widget_note_on                = theme.confdir .. "/icons/note_on.png"
-theme.widget_netdown                = theme.confdir .. "/icons/net_down.png"
-theme.widget_netup                  = theme.confdir .. "/icons/net_up.png"
-theme.widget_mail                   = theme.confdir .. "/icons/mail.png"
-theme.widget_batt                   = theme.confdir .. "/icons/bat.png"
-theme.widget_clock                  = theme.confdir .. "/icons/clock.png"
-theme.widget_vol                    = theme.confdir .. "/icons/spkr.png"
+theme.bg_normal     = "#282a36"
+theme.bg_focus      = "#9474d4"
+theme.bg_urgent     = "#5236C4"
+theme.bg_minimize   = "#000000"
+theme.bg_systray    = theme.bg_normal
 
-theme.taglist_squares_sel           = theme.confdir .. "/icons/square_a.png"
-theme.taglist_squares_unsel         = theme.confdir .. "/icons/square_b.png"
+theme.fg_normal     = "#aaaaaa"
+theme.fg_focus      = "#000000"
+theme.fg_urgent     = "#ffffff"
+theme.fg_minimize   = "#ffffff"
 
-theme.tasklist_disable_icon         = true
-theme.tasklist_floating             = ""
-theme.tasklist_maximized_horizontal = ""
-theme.tasklist_maximized_vertical   = ""
+theme.useless_gap   = dpi(2)
+theme.border_width  = dpi(2)
+theme.border_normal = "#1c2022"
+theme.border_focus  = "#8e71b7"
+theme.border_marked = "#3ca4d8"
 
--- theme.layout_tile                   = theme.confdir .. "/icons/tile.png"
--- theme.layout_tilegaps               = theme.confdir .. "/icons/tilegaps.png"
--- theme.layout_tileleft               = theme.confdir .. "/icons/tileleft.png"
--- theme.layout_tilebottom             = theme.confdir .. "/icons/tilebottom.png"
--- theme.layout_tiletop                = theme.confdir .. "/icons/tiletop.png"
--- theme.layout_fairv                  = theme.confdir .. "/icons/fairv.png"
--- theme.layout_fairh                  = theme.confdir .. "/icons/fairh.png"
--- theme.layout_spiral                 = theme.confdir .. "/icons/spiral.png"
--- theme.layout_dwindle                = theme.confdir .. "/icons/dwindle.png"
--- theme.layout_max                    = theme.confdir .. "/icons/max.png"
--- theme.layout_fullscreen             = theme.confdir .. "/icons/fullscreen.png"
--- theme.layout_magnifier              = theme.confdir .. "/icons/magnifier.png"
--- theme.layout_floating               = theme.confdir .. "/icons/floating.png"
+-- There are other variable sets
+-- overriding the default one when
+-- defined, the sets are:
+-- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
+-- tasklist_[bg|fg]_[focus|urgent]
+-- titlebar_[bg|fg]_[normal|focus]
+-- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
+-- mouse_finder_[color|timeout|animate_timeout|radius|factor]
+-- prompt_[fg|bg|fg_cursor|bg_cursor|font]
+-- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
+-- Example:
+--theme.taglist_bg_focus = "#ff0000"
 
-theme.useless_gap_width                         = 10
+-- Generate taglist squares:
+local taglist_square_size = dpi(4)
+theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
+    taglist_square_size, theme.fg_normal
+)
+theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+    taglist_square_size, theme.fg_normal
+)
 
-theme.layout_txt_tile               = "[t]"
-theme.layout_txt_tileleft           = "[l]"
-theme.layout_txt_tilebottom         = "[b]"
-theme.layout_txt_tiletop            = "[tt]"
-theme.layout_txt_fairv              = "[fv]"
-theme.layout_txt_fairh              = "[fh]"
-theme.layout_txt_spiral             = "[s]"
-theme.layout_txt_dwindle            = "[d]"
-theme.layout_txt_max                = "[m]"
-theme.layout_txt_fullscreen         = "[F]"
-theme.layout_txt_magnifier          = "[M]"
-theme.layout_txt_floating           = "[*]"
-theme.layout_txt_cascade            = "[cascade]"
-theme.layout_txt_cascadetile        = "[cascadetile]"
-theme.layout_txt_centerwork         = "[centerwork]"
-theme.layout_txt_termfair           = "[termfair]"
-theme.layout_txt_centerfair         = "[centerfair]"
-theme.layout_txt_uselessfair        = "[uf]"
-theme.layout_txt_uselessfairh       = "[ufh]"
-theme.layout_txt_uselesspiral       = "[us]"
-theme.layout_txt_uselessdwindle     = "[ud]"
-theme.layout_txt_uselesstile        = "[ut]"
-theme.layout_txt_uselesstileleft    = "[utl]"
-theme.layout_txt_uselesstiletop     = "[utt]"
-theme.layout_txt_uselesstilebottom  = "[utb]"
+-- Variables set for theming notifications:
+-- notification_font
+-- notification_[bg|fg]
+-- notification_[width|height|margin]
+-- notification_[border_color|border_width|shape|opacity]
+
+-- Variables set for theming the menu:
+-- menu_[bg|fg]_[normal|focus]
+-- menu_[border_color|border_width]
+theme.menu_submenu_icon = themes_path.."default/submenu.png"
+theme.menu_height = dpi(10)
+theme.menu_width  = dpi(100)
+
+-- You can add as many variables as
+-- you wish and access them by using
+-- beautiful.variable in your rc.lua
+--theme.bg_widget = "#cc0000"
+
+-- Define the image to load
+theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
+theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
+
+theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
+theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"
+
+theme.titlebar_ontop_button_normal_inactive = themes_path.."default/titlebar/ontop_normal_inactive.png"
+theme.titlebar_ontop_button_focus_inactive  = themes_path.."default/titlebar/ontop_focus_inactive.png"
+theme.titlebar_ontop_button_normal_active = themes_path.."default/titlebar/ontop_normal_active.png"
+theme.titlebar_ontop_button_focus_active  = themes_path.."default/titlebar/ontop_focus_active.png"
+
+theme.titlebar_sticky_button_normal_inactive = themes_path.."default/titlebar/sticky_normal_inactive.png"
+theme.titlebar_sticky_button_focus_inactive  = themes_path.."default/titlebar/sticky_focus_inactive.png"
+theme.titlebar_sticky_button_normal_active = themes_path.."default/titlebar/sticky_normal_active.png"
+theme.titlebar_sticky_button_focus_active  = themes_path.."default/titlebar/sticky_focus_active.png"
+
+theme.titlebar_floating_button_normal_inactive = themes_path.."default/titlebar/floating_normal_inactive.png"
+theme.titlebar_floating_button_focus_inactive  = themes_path.."default/titlebar/floating_focus_inactive.png"
+theme.titlebar_floating_button_normal_active = themes_path.."default/titlebar/floating_normal_active.png"
+theme.titlebar_floating_button_focus_active  = themes_path.."default/titlebar/floating_focus_active.png"
+
+theme.titlebar_maximized_button_normal_inactive = themes_path.."default/titlebar/maximized_normal_inactive.png"
+theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar/maximized_focus_inactive.png"
+theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
+theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
+
+theme.wallpaper = themes_path.."glazunov/background.png"
+
+-- You can use your own layout icons like this:
+theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
+theme.layout_fairv = themes_path.."default/layouts/fairvw.png"
+theme.layout_floating  = themes_path.."default/layouts/floatingw.png"
+theme.layout_magnifier = themes_path.."default/layouts/magnifierw.png"
+theme.layout_max = themes_path.."default/layouts/maxw.png"
+theme.layout_fullscreen = themes_path.."default/layouts/fullscreenw.png"
+theme.layout_tilebottom = themes_path.."default/layouts/tilebottomw.png"
+theme.layout_tileleft   = themes_path.."default/layouts/tileleftw.png"
+theme.layout_tile = themes_path.."default/layouts/tilew.png"
+theme.layout_tiletop = themes_path.."default/layouts/tiletopw.png"
+theme.layout_spiral  = themes_path.."default/layouts/spiralw.png"
+theme.layout_dwindle = themes_path.."default/layouts/dwindlew.png"
+theme.layout_cornernw = themes_path.."default/layouts/cornernww.png"
+theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
+theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
+theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
+
+-- Generate Awesome icon:
+theme.awesome_icon = theme_assets.awesome_icon(
+    theme.menu_height, theme.bg_focus, theme.fg_focus
+)
+
+-- Define the icon theme for application icons. If not set then the icons
+-- from /usr/share/icons and /usr/share/icons/hicolor will be used.
+theme.icon_theme = nil
 
 return theme
+
+-- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
