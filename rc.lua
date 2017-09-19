@@ -441,7 +441,10 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "a",     function () awful.util.spawn("playerctl previous --player=spotify") end),
     awful.key({ modkey,           }, "s",     function () awful.util.spawn("playerctl next --player=spotify") end),
     awful.key({ modkey,           }, "d",     function () awful.util.spawn("playerctl play-pause --player=spotify") end),
-    awful.key({ modkey,           }, "i",     function () awful.util.spawn("xcalib -i -a") end)
+    awful.key({ modkey,           }, "i",     function () awful.util.spawn("xcalib -i -a") end),
+
+    -- Rename tag
+    awful.key({ modkey, "Shift"   }, "Tab", function () lain.util.rename_tag(mypromptbox) end)
 )
 
 clientkeys = gears.table.join(
