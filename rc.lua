@@ -117,7 +117,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- mykeyboardlayout = awful.widget.keyboardlayout()
+
+-- Create systray
+mysystray = wibox.widget.systray()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -207,24 +210,29 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
-    -- Add widgets to the wibox
-    s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            s.mytaglist,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            wibox.widget.systray(),
-            mytextclock,
-            s.mylayoutbox,
-        },
-    }
+    local left_sublayout = wibox.layout.fixed.horizontal()
+    local right_sublayout = wibox.layout.fixed.horizontal()
+    local layout = wibox.layout.align.horizontal()
+
+    -- Left widgets
+    left_sublayout:add(mylauncher)
+    left_sublayout:add(s.mytaglist)
+    left_sublayout:add(s.mypromptbox)
+
+    -- Right widgets
+    if s.index == 2 then
+        mysystray.set_screen(s)
+        right_sublayout:add(mysystray)
+    end
+    right_sublayout:add(mytextclock)
+    right_sublayout:add(s.mylayoutbox)
+
+    -- Putting everything together
+    layout:set_left(left_sublayout)
+    layout:set_middle(s.mytasklist)
+    layout:set_right(right_sublayout)
+
+    s.mywibox:set_widget(layout)
 end)
 -- }}}
 
