@@ -109,8 +109,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                   }
                         })
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+-- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+--                                     menu = mymainmenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -215,7 +215,7 @@ awful.screen.connect_for_each_screen(function(s)
     local layout = wibox.layout.align.horizontal()
 
     -- Left widgets
-    left_sublayout:add(mylauncher)
+    -- left_sublayout:add(mylauncher)
     left_sublayout:add(s.mytaglist)
     left_sublayout:add(s.mypromptbox)
 
