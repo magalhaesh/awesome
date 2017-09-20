@@ -132,6 +132,14 @@ local separators = lain.util.separators
 -- Separators
 local arrow = separators.arrow_left
 
+-- Taskwarrior
+local task = wibox.widget.imagebox(beautiful.widget_task)
+lain.widget.contrib.task.attach(task, {
+    -- do not colorize output
+    show_cmd = "task | sed -r 's/\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g'"
+})
+task:buttons(awful.util.table.join(awful.button({}, 1, lain.widget.contrib.task.prompt)))
+
 -- MEM
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
 local mem = lain.widget.mem({
@@ -148,12 +156,12 @@ local cpu = lain.widget.cpu({
     end
 })
 
-local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
-local temp = lain.widget.temp({
-    settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. coretemp_now .. "°C "))
-    end
-})
+-- local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
+-- local temp = lain.widget.temp({
+--     settings = function()
+--         widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. coretemp_now .. "°C "))
+--     end
+-- })
 
 local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
 beautiful.fs = lain.widget.fs({
@@ -262,7 +270,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 18 })
 
     local left_sublayout = wibox.layout.fixed.horizontal()
     local right_sublayout = wibox.layout.fixed.horizontal()
@@ -280,13 +288,13 @@ awful.screen.connect_for_each_screen(function(s)
     end
 
     -- right_sublayout:add(wibox.container.background(wibox.container.margin(task, 3, 7), "#343434"))
-    -- right_sublayout:add(arrow("#343434", "#777E76"))
     right_sublayout:add(arrow(beautiful.bg_normal, "#6272a4"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 2, 3), "#6272a4"))
+    --right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 2, 3), "#6272a4"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(task, 3, 7), "#6272a4"))
     right_sublayout:add(arrow("#6272a4", "#44475a"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, 3, 4), "#44475a"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 3, 4), "#44475a"))
     right_sublayout:add(arrow("#44475a", "#6272a4"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { tempicon, temp.widget, layout = wibox.layout.align.horizontal }, 4, 4), "#6272a4"))
+    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, 4, 4), "#6272a4"))
     right_sublayout:add(arrow("#6272a4", "#44475a"))
     right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { fsicon, beautiful.fs.widget, layout = wibox.layout.align.horizontal }, 3, 3), "#44475a"))
     right_sublayout:add(arrow("#44475a", "#6272a4"))

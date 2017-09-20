@@ -136,6 +136,7 @@ theme.widget_vol_no = themes_path .. "glazunov/icons/vol_no.png"
 theme.widget_vol_mute = themes_path .. "glazunov/icons/vol_mute.png"
 theme.widget_mail = themes_path .. "glazunov/icons/mail.png"
 theme.widget_mail_on = themes_path .. "glazunov/icons/mail_on.png"
+theme.widget_task = themes_path .. "glazunov/icons/task.png"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
