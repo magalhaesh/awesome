@@ -132,14 +132,6 @@ local separators = lain.util.separators
 -- Separators
 local arrow = separators.arrow_left
 
--- Taskwarrior
-local task = wibox.widget.imagebox(beautiful.widget_task)
-lain.widget.contrib.task.attach(task, {
-    -- do not colorize output
-    show_cmd = "task | sed -r 's/\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g'"
-})
-task:buttons(awful.util.table.join(awful.button({}, 1, lain.widget.contrib.task.prompt)))
-
 -- MEM
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
 local mem = lain.widget.mem({
@@ -287,11 +279,7 @@ awful.screen.connect_for_each_screen(function(s)
         right_sublayout:add(mysystray)
     end
 
-    -- right_sublayout:add(wibox.container.background(wibox.container.margin(task, 3, 7), "#343434"))
-    right_sublayout:add(arrow(beautiful.bg_normal, "#6272a4"))
-    --right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 2, 3), "#6272a4"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(task, 3, 7), "#6272a4"))
-    right_sublayout:add(arrow("#6272a4", "#44475a"))
+    right_sublayout:add(arrow(beautiful.bg_normal, "#44475a"))
     right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 3, 4), "#44475a"))
     right_sublayout:add(arrow("#44475a", "#6272a4"))
     right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, 4, 4), "#6272a4"))
