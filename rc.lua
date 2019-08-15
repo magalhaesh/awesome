@@ -412,7 +412,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 
-    -- Media Keys
+    -- Function Keys
     awful.key({                   }, "XF86AudioMute",    function () awful.util.spawn("amixer -D pulse set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
     awful.key({                   }, "XF86AudioLowerVolume",    function () awful.util.spawn("pulsemixer --change-volume -1") end),
     awful.key({                   }, "XF86AudioRaiseVolume",    function () awful.util.spawn("pulsemixer --change-volume +1") end),
@@ -420,6 +420,8 @@ globalkeys = gears.table.join(
     awful.key({                   }, "XF86AudioStop",     function () awful.util.spawn("playerctl stop --player=spotify") end),
     awful.key({                   }, "XF86AudioPrev",     function () awful.util.spawn("playerctl previous --player=spotify") end),
     awful.key({                   }, "XF86AudioNext",     function () awful.util.spawn("playerctl next --player=spotify") end),
+    awful.key({                   }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 5") end),
+    awful.key({                   }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 5") end),
 
     -- Custom
     awful.key({ modkey,           }, "F1",    function () awful.util.spawn("amixer -D pulse set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
