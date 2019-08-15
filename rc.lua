@@ -425,18 +425,18 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Media Keys
-    awful.key({                   }, "XF86AudioMute",    function () awful.util.spawn("amixer set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
-    awful.key({                   }, "XF86AudioLowerVolume",    function () awful.util.spawn("amixer set Master 1%-")  awful.util.spawn("amixer set Speaker 1%-") end),
-    awful.key({                   }, "XF86AudioRaiseVolume",    function () awful.util.spawn("amixer set Master 1%+") awful.util.spawn("amixer set Speaker 1%+") end),
+    awful.key({                   }, "XF86AudioMute",    function () awful.util.spawn("amixer -D pulse set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
+    awful.key({                   }, "XF86AudioLowerVolume",    function () awful.util.spawn("pulsemixer --change-volume -1") end),
+    awful.key({                   }, "XF86AudioRaiseVolume",    function () awful.util.spawn("pulsemixer --change-volume +1") end),
     awful.key({                   }, "XF86AudioPlay",     function () awful.util.spawn("playerctl play-pause --player=spotify") end),
     awful.key({                   }, "XF86AudioStop",     function () awful.util.spawn("playerctl stop --player=spotify") end),
     awful.key({                   }, "XF86AudioPrev",     function () awful.util.spawn("playerctl previous --player=spotify") end),
     awful.key({                   }, "XF86AudioNext",     function () awful.util.spawn("playerctl next --player=spotify") end),
 
     -- Custom
-    awful.key({ modkey,           }, "F1",    function () awful.util.spawn("amixer set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
-    awful.key({ modkey,           }, "F2",    function () awful.util.spawn("amixer set Master 5%-")  awful.util.spawn("amixer set Speaker 5%-") end),
-    awful.key({ modkey,           }, "F3",    function () awful.util.spawn("amixer set Master 5%+") awful.util.spawn("amixer set Speaker 5%+") end),
+    awful.key({ modkey,           }, "F1",    function () awful.util.spawn("amixer -D pulse set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
+    awful.key({ modkey,           }, "F2",    function () awful.util.spawn("pulsemixer --change-volume -5")  awful.util.spawn("amixer set Speaker 5%-") end),
+    awful.key({ modkey,           }, "F3",    function () awful.util.spawn("pulsemixer --change-volume +5") awful.util.spawn("amixer set Speaker 5%+") end),
     awful.key({ modkey,           }, "F5",    function () awful.util.spawn("cmus-remote -u") end),
     awful.key({ modkey,           }, "F6",    function () awful.util.spawn("cmus-remote -s") end),
     awful.key({ modkey,           }, "F7",    function () awful.util.spawn("cmus-remote -r") end),
