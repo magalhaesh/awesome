@@ -158,7 +158,7 @@ local cpu = lain.widget.cpu({
 local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
 beautiful.fs = lain.widget.fs({
     options  = "--exclude-type=tmpfs",
-    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "xos4 Terminus 10" },
+    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "Hack 8" },
     settings = function()
         widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. fs_now.available_gb .. "GB "))
     end
