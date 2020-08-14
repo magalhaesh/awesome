@@ -14,7 +14,6 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-local eminent = require("eminent")
 local lain = require("lain")
 
 -- {{{ Error handling
@@ -670,6 +669,7 @@ client.connect_signal("mouse::enter", function(c)
     end
 end)
 
+-- Remove rounded borders when fullscreening
 client.connect_signal("property::fullscreen", function(c)
     if c.fullscreen then
         c.shape = gears.shape.rectangle
