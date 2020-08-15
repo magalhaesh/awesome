@@ -306,8 +306,8 @@ awful.screen.connect_for_each_screen(function(s)
     right_sublayout:add(arrow(bg_color_2, bg_color_1))
     right_sublayout:add(wrap_widget(clock, bg_color_1, 4, 8))
 
-    right_sublayout:add(arrow(bg_color_1, "alpha"))
-    right_sublayout:add(s.mylayoutbox)
+    right_sublayout:add(arrow(bg_color_1, bg_color_2))
+    right_sublayout:add(wrap_widget(s.mylayoutbox, bg_color_2, 0, 0))
 
     -- Putting everything together
     layout:set_left(left_sublayout)
