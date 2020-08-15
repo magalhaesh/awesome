@@ -14,7 +14,10 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- Hide empty tags
 local eminent = require("eminent.eminent")
+
+-- Layouts, widgets and utilities
 local lain = require("lain")
 
 -- {{{ Error handling
@@ -122,15 +125,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibar
 
--- Create systray
+-- Systray (holds systray icons for apps who provide them)
 mysystray = wibox.widget.systray()
 
-
 local markup = lain.util.markup
-local separators = lain.util.separators
-
--- Separators
-local arrow = separators.arrow_left
 
 -- MEM
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
@@ -148,15 +146,17 @@ local cpu = lain.widget.cpu({
     end
 })
 
+-- System Temperature
 -- local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
 -- local temp = lain.widget.temp({
 --     settings = function()
 --         widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. coretemp_now .. "°C "))
---     end
+--      end
 -- })
 
+-- Space available on filesystem
 local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
-beautiful.fs = lain.widget.fs({
+local fs = lain.widget.fs({
     options  = "--exclude-type=tmpfs",
     notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "Hack 8" },
     settings = function()
@@ -279,19 +279,34 @@ awful.screen.connect_for_each_screen(function(s)
         right_sublayout:add(mysystray)
     end
 
-    right_sublayout:add(arrow(beautiful.bg_normal, "#44475a"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, 3, 4), "#44475a"))
-    right_sublayout:add(arrow("#44475a", "#6272a4"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, 4, 4), "#6272a4"))
-    right_sublayout:add(arrow("#6272a4", "#44475a"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { fsicon, beautiful.fs.widget, layout = wibox.layout.align.horizontal }, 3, 3), "#44475a"))
-    right_sublayout:add(arrow("#44475a", "#6272a4"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, 3, 3), "#6272a4"))
-    right_sublayout:add(arrow("#6272a4", "#44475a"))
-    right_sublayout:add(wibox.container.background(wibox.container.margin(clock, 4, 8), "#44475a"))
-    right_sublayout:add(arrow("#44475a", "alpha"))
+    local bg_color_1 = "#44475a"
+    local bg_color_2 = "#6272a4"
 
-    -- right_sublayout:add(clock)
+    function wrap_widget(widget, bg_color, left_margin, right_margin)
+        widget = wibox.container.margin(widget, left_margin, right_margin)
+        widget = wibox.container.background(widget, bg_color)
+        return widget
+    end
+
+    -- Function to generate arrow separators
+    local arrow = lain.util.separators.arrow_left
+
+    right_sublayout:add(arrow("alpha", bg_color_1))
+    right_sublayout:add(wrap_widget(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, bg_color_1, 3, 4))
+
+    right_sublayout:add(arrow(bg_color_1, bg_color_2))
+    right_sublayout:add(wrap_widget(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, bg_color_2, 4, 4))
+
+    right_sublayout:add(arrow(bg_color_2, bg_color_1))
+    right_sublayout:add(wrap_widget(wibox.widget { fsicon, fs.widget, layout = wibox.layout.align.horizontal }, bg_color_1, 3, 3))
+
+    right_sublayout:add(arrow(bg_color_1, bg_color_2))
+    right_sublayout:add(wrap_widget(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, bg_color_2, 3, 3))
+
+    right_sublayout:add(arrow(bg_color_2, bg_color_1))
+    right_sublayout:add(wrap_widget(clock, bg_color_1, 4, 8))
+
+    right_sublayout:add(arrow(bg_color_1, "alpha"))
     right_sublayout:add(s.mylayoutbox)
 
     -- Putting everything together
