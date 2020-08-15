@@ -9,10 +9,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup").widget
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
+local hotkeys_popup = require("awful.hotkeys_popup")
 
 -- Hide empty tags
 local eminent = require("eminent.eminent")
