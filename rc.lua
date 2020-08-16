@@ -13,9 +13,6 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/wayfarer/the
 local naughty = require("naughty")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
--- Hide empty tags
-local eminent = require("eminent.eminent")
-
 -- Helpers functions
 local helpers = require("helpers")
 
@@ -99,7 +96,7 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, keys.taglist_buttons)
+    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.noempty, keys.taglist_buttons)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, keys.tasklist_buttons)
