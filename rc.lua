@@ -1,11 +1,14 @@
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
-require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/wayfarer/theme.lua")
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -52,10 +55,6 @@ end
 -- }}}
 
 -- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
--- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init(".config/awesome/themes/wayfarer/theme.lua")
-
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "vim"
@@ -283,6 +282,9 @@ client.connect_signal("mouse::enter", function(c)
         client.focus = c
     end
 end)
+
+-- Transfer focus to previous client when current client exits
+require("awful.autofocus")
 
 client.connect_signal("property::fullscreen", function(c)
     if c.fullscreen then
