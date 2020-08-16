@@ -7,7 +7,7 @@ local beautiful = require("beautiful")
 
 local rules = {}
 
-function create(client_keys, client_buttons)
+function rules.create(client_keys, client_buttons)
     -- Rules for all clients.
     return {
         { 
@@ -57,7 +57,5 @@ function create(client_keys, client_buttons)
         -- },
     }
 end
-
-rules.create = create
 
 return rules

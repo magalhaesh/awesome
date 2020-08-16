@@ -17,7 +17,7 @@ prevbutton = 8
 nextbutton = 9
 
 -- Global keybindings; Use with root keys to make them work anywhere.
-global_keys = gears.table.join(
+keys.global_keys = gears.table.join(
     awful.key({ modkey,           }, "q",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
@@ -156,7 +156,7 @@ global_keys = gears.table.join(
 -- Be careful: keycodes are used to make this work on any keyboard layout.
 -- This should map to the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
-    global_keys = gears.table.join(global_keys,
+    keys.global_keys = gears.table.join(keys.global_keys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
@@ -203,7 +203,7 @@ for i = 1, 9 do
 end
 
 -- Keys for clients; Use with awful rule properties to set up client keys.
-client_keys = gears.table.join(
+keys.client_keys = gears.table.join(
     awful.key({ modkey,           }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
@@ -248,7 +248,7 @@ client_keys = gears.table.join(
 )
 
 -- Buttons for desktop; Sets up clicks outside clients.
-desktop_buttons = gears.table.join(
+keys.desktop_buttons = gears.table.join(
     -- Right click opens menu
     awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, nextbutton, awful.tag.viewnext),
@@ -256,7 +256,7 @@ desktop_buttons = gears.table.join(
 )
 
 -- Buttons for clients; Use with awful rule properties to set up client clicks.
-client_buttons = gears.table.join(
+keys.client_buttons = gears.table.join(
     -- Raise & focus client on click
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     -- Move client on meta + click
@@ -266,7 +266,7 @@ client_buttons = gears.table.join(
 )
 
 -- Buttons for taglist widget.
-taglist_buttons = gears.table.join(
+keys.taglist_buttons = gears.table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
     awful.button({ modkey }, 1, function(t)
         if client.focus then
@@ -284,7 +284,7 @@ taglist_buttons = gears.table.join(
 )
 
 -- Buttons for tasklist widget.
-tasklist_buttons = gears.table.join(
+keys.tasklist_buttons = gears.table.join(
     -- Minimize/Un-minimize on click
     awful.button({ }, 1, function (c)
         if c == client.focus then
@@ -324,12 +324,5 @@ tasklist_buttons = gears.table.join(
         awful.client.focus.byidx(-1)
     end)
 )
-
-keys.global_keys = global_keys
-keys.client_keys = client_keys
-keys.desktop_buttons = desktop_buttons
-keys.client_buttons = client_buttons
-keys.taglist_buttons = taglist_buttons
-keys.tasklist_buttons = tasklist_buttons
 
 return keys
