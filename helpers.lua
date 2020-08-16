@@ -1,11 +1,16 @@
 -- ===================================================================
--- Helper functions that don't fit anywhere else.
+-- Helper functions and tables that don't fit anywhere else.
 -- ===================================================================
 local gears = require("gears")
 local beautiful = require("beautiful")
 
 -- Module table.
 local helpers = {}
+
+helpers.default_apps = {
+    terminal = "kitty",
+    editor = os.getenv("EDITOR") or "vim"
+}
 
 -- Function for setting wallpaper on each screen.
 function helpers.set_wallpaper(s)

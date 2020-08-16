@@ -11,7 +11,6 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/wayfarer/the
 
 -- Notification library
 local naughty = require("naughty")
-local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 -- Hide empty tags
@@ -71,48 +70,13 @@ awful.layout.layouts = {
     awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
     awful.layout.suit.floating,
-    awful.layout.suit.corner.nw,
     awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
+    awful.layout.suit.corner.nw
 }
 -- }}}
-
--- {{{ Menu
--- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() return false, hotkeys_popup.show_help end},
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end}
-}
-
-mymainmenu = awful.menu({
-    items = {
-        { "awesome", myawesomemenu, beautiful.awesome_icon },
-        { "open terminal", terminal }
-    }
-})
-
--- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
---                                     menu = mymainmenu })
-
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
-
--- Keyboard map indicator and switcher
--- mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
-
 -- Create systray widget (holds systray icons for apps who provide them).
 mysystray = wibox.widget.systray()
 
@@ -148,7 +112,6 @@ awful.screen.connect_for_each_screen(function(s)
     local layout = wibox.layout.align.horizontal()
 
     -- Left widgets
-    -- left_sublayout:add(mylauncher)
     left_sublayout:add(s.mytaglist)
     left_sublayout:add(s.mypromptbox)
 

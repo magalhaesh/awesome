@@ -3,7 +3,11 @@
 -- ===================================================================
 local gears = require("gears")
 local awful = require("awful")
+local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+
+local helpers = require("helpers")
+local terminal = helpers.default_apps.terminal
 
 -- Module table.
 local keys = {}

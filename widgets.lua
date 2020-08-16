@@ -77,7 +77,7 @@ local clock = awful.widget.watch(
     end
 )
 
-widget_table.clock = { icon = nil, widget = clock },
+widget_table.clock = { icon = nil, widget = clock }
 
 -- Wraps widgets into a "cute" box with margins and backgrounds. The must be a
 -- better way of doing this. TODO refactor
