@@ -6,14 +6,16 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local lain = require("lain")
 
+-- Module table.
 local widgets = {}
 
--- Not sure wtf this is yet, so I'm just cargo culting.
+local widget_table = {}
+
+-- Facilitates text customization.
 local markup = lain.util.markup
 
--- Function to generate arrow separators
+-- Function to generate arrow separators.
 local arrow = lain.util.separators.arrow_left
-
 
 -- MEM
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
@@ -23,6 +25,8 @@ local mem = lain.widget.mem({
     end
 })
 
+widget_table.mem = { icon = memicon, widget = mem.widget }
+
 -- CPU
 local cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
 local cpu = lain.widget.cpu({
@@ -31,6 +35,8 @@ local cpu = lain.widget.cpu({
     end
 })
 
+widget_table.cpu = { icon = cpuicon, widget = cpu.widget }
+
 -- System Temperature
 local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
 local temp = lain.widget.temp({
@@ -38,6 +44,8 @@ local temp = lain.widget.temp({
         widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. coretemp_now .. "°C "))
     end
 })
+
+widget_table.temp = { icon = tempicon, widget = temp.widget }
 
 -- Space available on filesystem
 local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
@@ -49,6 +57,8 @@ local fs = lain.widget.fs({
     end
 })
 
+widget_table.fs = { icon = fsicon, widget = fs.widget }
+
 -- Network Down/Up status
 local neticon = wibox.widget.imagebox(beautiful.widget_net)
 local net = lain.widget.net({
@@ -57,6 +67,8 @@ local net = lain.widget.net({
     end
 })
 
+widget_table.net = { icon = neticon, widget = net.widget }
+
 -- Textclock
 local clock = awful.widget.watch(
     "date +'%a %d %b %R'", 60,
@@ -64,6 +76,8 @@ local clock = awful.widget.watch(
         widget:set_markup(" " .. markup.fontfg(beautiful.font, beautiful.widget_fg_normal, stdout))
     end
 )
+
+widget_table.clock = { icon = nil, widget = clock },
 
 -- Wraps widgets into a "cute" box with margins and backgrounds. The must be a
 -- better way of doing this. TODO refactor
@@ -79,16 +93,6 @@ function widgets.wrap_widget(icon, widget, bg_color, left_margin, right_margin)
     widget = wibox.container.background(widget, bg_color)
     return widget
 end
-
--- Avoid if/else pattern below
-local widget_table = {
-    mem = { icon = memicon, widget = mem.widget },
-    cpu = { icon = cpuicon, widget = cpu.widget },
-    temp = { icon = tempicon, widget = temp.widget },
-    fs = { icon = fsicon, widget = fs.widget },
-    net = { icon = neticon, widget = net.widget },
-    clock = { icon = nil, widget = clock },
-}
 
 -- Get widget with configurable background and margins.
 function widgets.get_widget(widget_name, bg_color, left_margin, right_margin)

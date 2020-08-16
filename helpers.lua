@@ -4,6 +4,7 @@
 local gears = require("gears")
 local beautiful = require("beautiful")
 
+-- Module table.
 local helpers = {}
 
 -- Function for setting wallpaper on each screen.
