@@ -33,9 +33,10 @@ function rules.create(client_keys, client_buttons)
                     "copyq", -- Includes session name in class.
                 },
                 class = {
-                    "Arandr", -- Xorg gui configuration
-                    "Gpick", -- color picker
-                    "Sxiv", -- Image viewer
+                    "arandr", -- Xorg gui configuration
+                    "gpick", -- Color picker
+                    "sxiv", -- Image viewer
+                    "vimiv", -- Image viewer
                     "pinentry", -- gpg
                 },
                 name = {
@@ -45,7 +46,10 @@ function rules.create(client_keys, client_buttons)
                     "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
                 }
             },
-            properties = { floating = true }
+            properties = {
+                floating = true,
+                placement = awful.placement.centered
+            }
         }
     }
 end
