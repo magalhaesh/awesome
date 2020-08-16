@@ -20,9 +20,6 @@ local eminent = require("eminent.eminent")
 -- Custom Widgets
 local widgets = require("widgets")
 
--- Layouts, widgets and utilities
-local lain = require("lain")
-
 -- Set up root keys and buttons
 local keys = require("keys")
 root.keys(keys.global_keys)
@@ -177,25 +174,22 @@ awful.screen.connect_for_each_screen(function(s)
     local bg_color_1 = "#44475a"
     local bg_color_2 = "#6272a4"
 
-    -- Function to generate arrow separators
-    local arrow = lain.util.separators.arrow_left
-
-    right_sublayout:add(arrow("alpha", bg_color_1))
+    right_sublayout:add(widgets.get_left_arrow("alpha", bg_color_1))
     right_sublayout:add(widgets.get_widget("mem", bg_color_1, 3, 4))
 
-    right_sublayout:add(arrow(bg_color_1, bg_color_2))
+    right_sublayout:add(widgets.get_left_arrow(bg_color_1, bg_color_2))
     right_sublayout:add(widgets.get_widget("cpu", bg_color_2, 4, 4))
 
-    right_sublayout:add(arrow(bg_color_2, bg_color_1))
+    right_sublayout:add(widgets.get_left_arrow(bg_color_2, bg_color_1))
     right_sublayout:add(widgets.get_widget("fs", bg_color_1, 3, 3))
 
-    right_sublayout:add(arrow(bg_color_1, bg_color_2))
+    right_sublayout:add(widgets.get_left_arrow(bg_color_1, bg_color_2))
     right_sublayout:add(widgets.get_widget("net", bg_color_2, 3, 3))
 
-    right_sublayout:add(arrow(bg_color_2, bg_color_1))
+    right_sublayout:add(widgets.get_left_arrow(bg_color_2, bg_color_1))
     right_sublayout:add(widgets.get_widget("clock", bg_color_1, 4, 8))
 
-    right_sublayout:add(arrow(bg_color_1, bg_color_2))
+    right_sublayout:add(widgets.get_left_arrow(bg_color_1, bg_color_2))
     right_sublayout:add(widgets.wrap_widget(nil, s.mylayoutbox, bg_color_2, 0, 0))
 
     -- Putting everything together

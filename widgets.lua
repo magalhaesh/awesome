@@ -8,7 +8,12 @@ local lain = require("lain")
 
 local widgets = {}
 
+-- Not sure wtf this is yet, so I'm just cargo culting.
 local markup = lain.util.markup
+
+-- Function to generate arrow separators
+local arrow = lain.util.separators.arrow_left
+
 
 -- MEM
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
@@ -75,7 +80,7 @@ function widgets.wrap_widget(icon, widget, bg_color, left_margin, right_margin)
     return widget
 end
 
--- Avoid a if/else pattern below
+-- Avoid if/else pattern below
 local widget_table = {
     mem = { icon = memicon, widget = mem.widget },
     cpu = { icon = cpuicon, widget = cpu.widget },
@@ -85,6 +90,7 @@ local widget_table = {
     clock = { icon = nil, widget = clock },
 }
 
+-- Get widget with configurable background and margins.
 function widgets.get_widget(widget_name, bg_color, left_margin, right_margin)
     return widgets.wrap_widget(
         widget_table[widget_name].icon,
@@ -93,6 +99,11 @@ function widgets.get_widget(widget_name, bg_color, left_margin, right_margin)
         left_margin,
         right_margin
     )
+end
+
+-- Gets a left arrow. What a shock.
+function widgets.get_left_arrow(background, tip)
+    return arrow(background, tip)
 end
 
 return widgets
