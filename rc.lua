@@ -17,6 +17,9 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Hide empty tags
 local eminent = require("eminent.eminent")
 
+-- Custom Widgets
+local widgets = require("widgets")
+
 -- Layouts, widgets and utilities
 local lain = require("lain")
 
@@ -110,61 +113,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- {{{ Wibar
 
--- Systray (holds systray icons for apps who provide them)
+-- Create systray widget (holds systray icons for apps who provide them).
 mysystray = wibox.widget.systray()
 
-local markup = lain.util.markup
-
--- MEM
-local memicon = wibox.widget.imagebox(beautiful.widget_mem)
-local mem = lain.widget.mem({
-    settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. mem_now.used .. "MB "))
-    end
-})
-
--- CPU
-local cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
-local cpu = lain.widget.cpu({
-    settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal ," " .. cpu_now.usage .. "% "))
-    end
-})
-
--- System Temperature
--- local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
--- local temp = lain.widget.temp({
---     settings = function()
---         widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. coretemp_now .. "°C "))
---      end
--- })
-
--- Space available on filesystem
-local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
-local fs = lain.widget.fs({
-    options  = "--exclude-type=tmpfs",
-    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "Hack 8" },
-    settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. fs_now.available_gb .. "GB "))
-    end
-})
-
--- Network Down/Up status
-local neticon = wibox.widget.imagebox(beautiful.widget_net)
-local net = lain.widget.net({
-    settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. net_now.received .. " ↓↑ " .. net_now.sent .. " "))
-    end
-})
-
--- Textclock
-local clock = awful.widget.watch(
-    "date +'%a %d %b %R'", 60,
-    function(widget, stdout)
-        widget:set_markup(" " .. markup.fontfg(beautiful.font, beautiful.widget_fg_normal, stdout))
-    end
-)
-
+-- Function for setting wallpaper on each screen.
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -225,32 +177,26 @@ awful.screen.connect_for_each_screen(function(s)
     local bg_color_1 = "#44475a"
     local bg_color_2 = "#6272a4"
 
-    function wrap_widget(widget, bg_color, left_margin, right_margin)
-        widget = wibox.container.margin(widget, left_margin, right_margin)
-        widget = wibox.container.background(widget, bg_color)
-        return widget
-    end
-
     -- Function to generate arrow separators
     local arrow = lain.util.separators.arrow_left
 
     right_sublayout:add(arrow("alpha", bg_color_1))
-    right_sublayout:add(wrap_widget(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, bg_color_1, 3, 4))
+    right_sublayout:add(widgets.get_widget("mem", bg_color_1, 3, 4))
 
     right_sublayout:add(arrow(bg_color_1, bg_color_2))
-    right_sublayout:add(wrap_widget(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, bg_color_2, 4, 4))
+    right_sublayout:add(widgets.get_widget("cpu", bg_color_2, 4, 4))
 
     right_sublayout:add(arrow(bg_color_2, bg_color_1))
-    right_sublayout:add(wrap_widget(wibox.widget { fsicon, fs.widget, layout = wibox.layout.align.horizontal }, bg_color_1, 3, 3))
+    right_sublayout:add(widgets.get_widget("fs", bg_color_1, 3, 3))
 
     right_sublayout:add(arrow(bg_color_1, bg_color_2))
-    right_sublayout:add(wrap_widget(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, bg_color_2, 3, 3))
+    right_sublayout:add(widgets.get_widget("net", bg_color_2, 3, 3))
 
     right_sublayout:add(arrow(bg_color_2, bg_color_1))
-    right_sublayout:add(wrap_widget(clock, bg_color_1, 4, 8))
+    right_sublayout:add(widgets.get_widget("clock", bg_color_1, 4, 8))
 
     right_sublayout:add(arrow(bg_color_1, bg_color_2))
-    right_sublayout:add(wrap_widget(s.mylayoutbox, bg_color_2, 0, 0))
+    right_sublayout:add(widgets.wrap_widget(nil, s.mylayoutbox, bg_color_2, 0, 0))
 
     -- Putting everything together
     layout:set_left(left_sublayout)
@@ -264,7 +210,7 @@ end)
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
-    -- Set new clients as secondary (puts them on secondary regions)
+    -- Set new clients as secondary.
     if not awesome.startup then
         awful.client.setslave(c)
     end
@@ -277,12 +223,12 @@ client.connect_signal("manage", function (c)
     end
 end)
 
--- Focus client on mouseover
+-- Focus client on mouseover.
 client.connect_signal("mouse::enter", function(c)
     client.focus = c
 end)
 
--- Transfer focus to previous client when a client is closet
+-- Transfer focus to previous client when a client is closed.
 require("awful.autofocus")
 
 client.connect_signal("property::fullscreen", function(c)

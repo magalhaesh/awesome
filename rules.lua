@@ -1,5 +1,5 @@
 -- ===================================================================
--- Sets up awful rules
+-- Functions and utilities for setting up awful rules
 -- ===================================================================
 local gears = require("gears")
 local awful = require("awful")
