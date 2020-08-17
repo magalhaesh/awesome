@@ -21,7 +21,13 @@ local arrow = lain.util.separators.arrow_left
 local memicon = wibox.widget.imagebox(beautiful.widget_mem)
 local mem = lain.widget.mem({
     settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. mem_now.used .. "MB "))
+        widget:set_markup(
+            markup.fontfg(
+                beautiful.font,
+                beautiful.widget_fg_normal,
+                " " .. mem_now.used .. "MB "
+            )
+        )
     end
 })
 
@@ -31,7 +37,13 @@ widget_table.mem = { icon = memicon, widget = mem.widget }
 local cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
 local cpu = lain.widget.cpu({
     settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal ," " .. cpu_now.usage .. "% "))
+        widget:set_markup(
+            markup.fontfg(
+                beautiful.font,
+                beautiful.widget_fg_normal,
+                " " .. cpu_now.usage .. "% "
+            )
+        )
     end
 })
 
@@ -41,7 +53,13 @@ widget_table.cpu = { icon = cpuicon, widget = cpu.widget }
 local tempicon = wibox.widget.imagebox(beautiful.widget_temp)
 local temp = lain.widget.temp({
     settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. coretemp_now .. "°C "))
+        widget:set_markup(
+            markup.fontfg(
+                beautiful.font,
+                beautiful.widget_fg_normal,
+                " " .. coretemp_now .. "°C "
+            )
+        )
     end
 })
 
@@ -51,9 +69,21 @@ widget_table.temp = { icon = tempicon, widget = temp.widget }
 local fsicon = wibox.widget.imagebox(beautiful.widget_hdd)
 local fs = lain.widget.fs({
     options  = "--exclude-type=tmpfs",
-    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = "Hack 8" },
+    notification_preset = {
+        fg = beautiful.fg_normal,
+        bg = beautiful.bg_normal,
+        font = beautiful.font
+    },
     settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. fs_now.available_gb .. "GB "))
+        widget:set_markup(
+            markup.fontfg(
+                beautiful.font,
+                beautiful.widget_fg_normal,
+                " " .. string.format(
+                    "%.0f ", fs_now["/"].free
+                ) .. fs_now["/"].units .. " "
+            )
+        )
     end
 })
 
@@ -63,7 +93,13 @@ widget_table.fs = { icon = fsicon, widget = fs.widget }
 local neticon = wibox.widget.imagebox(beautiful.widget_net)
 local net = lain.widget.net({
     settings = function()
-        widget:set_markup(markup.fontfg(beautiful.font, beautiful.widget_fg_normal, " " .. net_now.received .. " ↓↑ " .. net_now.sent .. " "))
+        widget:set_markup(
+            markup.fontfg(
+                beautiful.font,
+                beautiful.widget_fg_normal,
+                " " .. net_now.received .. " ↓↑ " .. net_now.sent .. " "
+            )
+        )
     end
 })
 
@@ -73,7 +109,11 @@ widget_table.net = { icon = neticon, widget = net.widget }
 local clock = awful.widget.watch(
     "date +'%a %d %b %R'", 60,
     function(widget, stdout)
-        widget:set_markup(" " .. markup.fontfg(beautiful.font, beautiful.widget_fg_normal, stdout))
+        widget:set_markup(
+            " " .. markup.fontfg(
+            beautiful.font,
+            beautiful.widget_fg_normal, stdout)
+        )
     end
 )
 
