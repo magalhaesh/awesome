@@ -41,6 +41,7 @@ function rules.create(client_keys, client_buttons)
                 },
                 name = {
                     "Event Tester", -- xev
+                    "Open Database", -- keepass
                 },
                 role = {
                     "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
