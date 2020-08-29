@@ -43,7 +43,6 @@ keys.global_keys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    -- awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
     awful.key({ modkey,           }, "w", function () awful.util.spawn("rofi -show window") end,
               {description = "show main menu", group = "awesome"}),
 
@@ -253,8 +252,6 @@ keys.client_keys = gears.table.join(
 
 -- Buttons for desktop; Sets up clicks outside clients.
 keys.desktop_buttons = gears.table.join(
-    -- Right click opens menu
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, nextbutton, awful.tag.viewnext),
     awful.button({ }, prevbutton, awful.tag.viewprev)
 )
