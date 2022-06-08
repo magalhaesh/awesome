@@ -5,6 +5,7 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local widgets = require("widgets")
+local beautiful = require("beautiful")
 
 local bar = {}
 
@@ -45,8 +46,8 @@ function bar.setup(s, keys)
         right_sublayout:add(mysystray)
     end
 
-    local bg_color_1 = "#44475a"
-    local bg_color_2 = "#6272a4"
+    local bg_color_1 = beautiful.bg_normal
+    local bg_color_2 = beautiful.bg_focus
 
     right_sublayout:add(widgets.get_left_arrow("alpha", bg_color_1))
     right_sublayout:add(widgets.get_widget("mem", bg_color_1, 3, 4))
