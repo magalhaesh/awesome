@@ -20,6 +20,27 @@ modkey = "Mod4"
 prevbutton = 8
 nextbutton = 9
 
+-- A few functions used by multiple global keybindings.
+function toggle_mute()
+    awful.util.spawn("pulsemixer --toggle-mute")
+end
+
+function change_volume(change_percentage_text)
+    awful.util.spawn("pulsemixer --change-volume " .. change_percentage_text)
+end
+
+function song_toggle_play()
+    awful.util.spawn("playerctl play-pause --player=spotify")
+end
+
+function song_previous()
+    awful.util.spawn("playerctl previous --player=spotify")
+end
+
+function song_next()
+    awful.util.spawn("playerctl next --player=spotify")
+end
+
 -- Global keybindings; Use with root keys to make them work anywhere.
 keys.global_keys = gears.table.join(
     awful.key({ modkey,           }, "q",      hotkeys_popup.show_help,
@@ -123,32 +144,25 @@ keys.global_keys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Function Keys
-    awful.key({                   }, "XF86AudioMute",    function () awful.util.spawn("amixer -D pulse set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
-    awful.key({                   }, "XF86AudioLowerVolume",    function () awful.util.spawn("pulsemixer --change-volume -1") end),
-    awful.key({                   }, "XF86AudioRaiseVolume",    function () awful.util.spawn("pulsemixer --change-volume +1") end),
-    awful.key({                   }, "XF86AudioPlay",     function () awful.util.spawn("playerctl play-pause --player=spotify") end),
+    awful.key({                   }, "XF86AudioMute",     toggle_mute),
+    awful.key({                   }, "XF86AudioLowerVolume",    function () change_volume("-1") end),
+    awful.key({                   }, "XF86AudioRaiseVolume",    function () change_volume("+1") end),
+    awful.key({                   }, "XF86AudioPlay",     toggle_play),
     awful.key({                   }, "XF86AudioStop",     function () awful.util.spawn("playerctl stop --player=spotify") end),
-    awful.key({                   }, "XF86AudioPrev",     function () awful.util.spawn("playerctl previous --player=spotify") end),
-    awful.key({                   }, "XF86AudioNext",     function () awful.util.spawn("playerctl next --player=spotify") end),
+    awful.key({                   }, "XF86AudioPrev",     song_previous),
+    awful.key({                   }, "XF86AudioNext",     song_next),
     awful.key({                   }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 5") end),
     awful.key({                   }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 5") end),
 
     -- Custom
-    awful.key({ modkey,           }, "F1",    function () awful.util.spawn("amixer -D pulse set Master toggle") awful.util.spawn("amixer set Speaker toggle") end),
-    awful.key({ modkey,           }, "F2",    function () awful.util.spawn("pulsemixer --change-volume -5")  awful.util.spawn("amixer set Speaker 5%-") end),
-    awful.key({ modkey,           }, "F3",    function () awful.util.spawn("pulsemixer --change-volume +5") awful.util.spawn("amixer set Speaker 5%+") end),
-    awful.key({ modkey,           }, "F5",    function () awful.util.spawn("cmus-remote -u") end),
-    awful.key({ modkey,           }, "F6",    function () awful.util.spawn("cmus-remote -s") end),
-    awful.key({ modkey,           }, "F7",    function () awful.util.spawn("cmus-remote -r") end),
-    awful.key({ modkey, "Shift"   }, "F7",    function () awful.util.spawn("cmus-remote -k -15s") end),
-    awful.key({ modkey,           }, "F8",    function () awful.util.spawn("cmus-remote -n") end),
-    awful.key({ modkey, "Shift"   }, "F8",    function () awful.util.spawn("cmus-remote -k +15s") end),
-    awful.key({ modkey,           }, "F9",    function () awful.util.spawn("cmus-remote -S") end),
+    awful.key({ modkey,           }, "F1",    toggle_mute),
+    awful.key({ modkey,           }, "F2",    function () change_volume("-5") end),
+    awful.key({ modkey,           }, "F3",    function () change_volume("+5") end),
     awful.key({ modkey,           }, "F12",   function () awful.util.spawn("xscreensaver-command -lock") end),
 
-    awful.key({ modkey,           }, "a",     function () awful.util.spawn("playerctl previous --player=spotify") end),
-    awful.key({ modkey,           }, "s",     function () awful.util.spawn("playerctl next --player=spotify") end),
-    awful.key({ modkey,           }, "d",     function () awful.util.spawn("playerctl play-pause --player=spotify") end),
+    awful.key({ modkey,           }, "a",     song_previous),
+    awful.key({ modkey,           }, "s",     song_next),
+    awful.key({ modkey,           }, "d",     song_toggle_play),
     awful.key({ modkey,           }, "i",     function () awful.util.spawn("xcalib -i -a") end),
 
     -- Rename tag
