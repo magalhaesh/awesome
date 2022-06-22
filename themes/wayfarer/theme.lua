@@ -14,8 +14,8 @@ local theme = {}
 
 theme.font = "DejaVu Sans Code 8"
 
-theme.bg_normal = "#282a36"
-theme.bg_focus = "#9474d4"
+theme.bg_normal = "#282828"
+theme.bg_focus = "#8e71b7"
 theme.bg_urgent = "#5236C4"
 theme.bg_minimize = "#000000"
 theme.bg_systray = theme.bg_normal
@@ -27,7 +27,7 @@ theme.fg_minimize = "#ffffff"
 
 theme.border_width = dpi(1)
 theme.border_normal = "#1c2022"
-theme.border_focus = "#8e71b7"
+theme.border_focus = theme.bg_focus
 theme.border_marked = "#3ca4d8"
 
 theme.widget_fg_normal = "#fefefe"

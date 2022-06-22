@@ -20,27 +20,6 @@ modkey = "Mod4"
 prevbutton = 8
 nextbutton = 9
 
--- A few functions used by multiple global keybindings.
-function toggle_mute()
-    awful.util.spawn("pulsemixer --toggle-mute")
-end
-
-function change_volume(change_percentage_text)
-    awful.util.spawn("pulsemixer --change-volume " .. change_percentage_text)
-end
-
-function song_toggle_play()
-    awful.util.spawn("playerctl play-pause --player=spotify")
-end
-
-function song_previous()
-    awful.util.spawn("playerctl previous --player=spotify")
-end
-
-function song_next()
-    awful.util.spawn("playerctl next --player=spotify")
-end
-
 -- Global keybindings; Use with root keys to make them work anywhere.
 keys.global_keys = gears.table.join(
     awful.key({ modkey,           }, "q",      hotkeys_popup.show_help,
@@ -127,7 +106,7 @@ keys.global_keys = gears.table.join(
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
-    -- Rua lua code
+    -- Run lua code
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run {
@@ -144,25 +123,26 @@ keys.global_keys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Function Keys
-    awful.key({                   }, "XF86AudioMute",     toggle_mute),
-    awful.key({                   }, "XF86AudioLowerVolume",    function () change_volume("-1") end),
-    awful.key({                   }, "XF86AudioRaiseVolume",    function () change_volume("+1") end),
+    awful.key({                   }, "XF86AudioMute",     helpers.toggle_mute),
+    awful.key({                   }, "XF86AudioLowerVolume",    function () helpers.change_volume("-1") end),
+    awful.key({                   }, "XF86AudioRaiseVolume",    function () helpers.change_volume("+1") end),
     awful.key({                   }, "XF86AudioPlay",     toggle_play),
     awful.key({                   }, "XF86AudioStop",     function () awful.util.spawn("playerctl stop --player=spotify") end),
-    awful.key({                   }, "XF86AudioPrev",     song_previous),
-    awful.key({                   }, "XF86AudioNext",     song_next),
+    awful.key({                   }, "XF86AudioPrev",     helpers.song_previous),
+    awful.key({                   }, "XF86AudioNext",     helpers.song_next),
     awful.key({                   }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 5") end),
     awful.key({                   }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 5") end),
 
     -- Custom
-    awful.key({ modkey,           }, "F1",    toggle_mute),
-    awful.key({ modkey,           }, "F2",    function () change_volume("-5") end),
-    awful.key({ modkey,           }, "F3",    function () change_volume("+5") end),
-    awful.key({ modkey,           }, "F12",   function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ modkey,           }, "F1",    helpers.toggle_mute),
+    awful.key({ modkey,           }, "F2",    function () helpers.change_volume("-5") end),
+    awful.key({ modkey,           }, "F3",    function () helpers.change_volume("+5") end),
+    awful.key({ modkey,           }, "F12",   helpers.lock_screen),
+    awful.key({ modkey, "Shift"   }, "F1",    helpers.toggle_desk_light),
 
-    awful.key({ modkey,           }, "a",     song_previous),
-    awful.key({ modkey,           }, "s",     song_next),
-    awful.key({ modkey,           }, "d",     song_toggle_play),
+    awful.key({ modkey,           }, "a",     helpers.song_previous),
+    awful.key({ modkey,           }, "s",     helpers.song_next),
+    awful.key({ modkey,           }, "d",     helpers.song_toggle_play),
     awful.key({ modkey,           }, "i",     function () awful.util.spawn("xcalib -i -a") end),
 
     -- Rename tag
