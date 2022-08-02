@@ -41,7 +41,7 @@ function bar.setup(s, keys)
     left_sublayout:add(s.mypromptbox)
 
     -- Right widgets.
-    if s.index == 2 then
+    if s.index == screen:count() then
         mysystray.set_screen(s)
         right_sublayout:add(mysystray)
     end
