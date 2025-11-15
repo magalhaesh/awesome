@@ -130,8 +130,8 @@ keys.global_keys = gears.table.join(
     awful.key({                   }, "XF86AudioStop",     function () awful.util.spawn("playerctl stop --player=spotify") end),
     awful.key({                   }, "XF86AudioPrev",     helpers.song_previous),
     awful.key({                   }, "XF86AudioNext",     helpers.song_next),
-    awful.key({                   }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 5") end),
-    awful.key({                   }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 5") end),
+    awful.key({                   }, "XF86MonBrightnessDown", function () awful.util.spawn("brightnessctl set 5%-") end),
+    awful.key({                   }, "XF86MonBrightnessUp", function () awful.util.spawn("brightnessctl set +5%") end),
 
     -- Custom
     awful.key({ modkey,           }, "F1",    helpers.toggle_mute),
