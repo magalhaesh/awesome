@@ -102,10 +102,6 @@ keys.global_keys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
-
     -- Run lua code
     awful.key({ modkey }, "x",
               function ()
@@ -119,7 +115,7 @@ keys.global_keys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}),
 
     -- Calls Menubar, which shows freedesktop menu items
-    awful.key({ modkey }, "p", function() menubar.show() end,
+    awful.key({ modkey }, "r", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 
     -- Function Keys
@@ -144,6 +140,7 @@ keys.global_keys = gears.table.join(
     awful.key({ modkey,           }, "s",     helpers.song_next),
     awful.key({ modkey,           }, "d",     helpers.song_toggle_play),
     awful.key({ modkey,           }, "i",     function () awful.util.spawn("xcalib -i -a") end),
+    awful.key({ modkey,           }, "p",     function () awful.util.spawn("flameshot gui") end),
 
     -- Rename tag
     awful.key({ modkey, "Shift"   }, "Tab", function () lain.util.rename_tag(mypromptbox) end)
